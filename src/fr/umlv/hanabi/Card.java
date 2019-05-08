@@ -1,5 +1,8 @@
 package fr.umlv.hanabi;
 
+/**
+ *
+ */
 public class Card
 {
     /**
@@ -21,6 +24,12 @@ public class Card
      * Return true if the player with this card has the information about the number.
      */
     private boolean numberRevealed;
+
+    public Card(String color, int number)
+    {
+        this.color = color;
+        this.number = number;
+    }
 
 
     /**

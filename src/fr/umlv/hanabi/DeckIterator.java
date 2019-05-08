@@ -2,6 +2,9 @@ package fr.umlv.hanabi;
 
 import java.util.Iterator;
 
+/**
+ *
+ */
 public class DeckIterator implements Iterator
 {
 

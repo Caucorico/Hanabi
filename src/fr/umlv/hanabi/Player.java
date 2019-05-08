@@ -1,5 +1,8 @@
 package fr.umlv.hanabi;
 
+/**
+ *
+ */
 public class Player
 {
     /**
@@ -18,12 +21,19 @@ public class Player
     private Deck hand;
 
     /**
-     * Player object constructor.
-     * @param nbCards The number of cards given to the player at the start of the game
+     * The hand max cards number
      */
-    public Player(int nbCards)
-    {
+    private int numberOfCards;
 
+    /**
+     * Player object constructor.
+     */
+    public Player(int number, int nbCards, Board board)
+    {
+        this.number = number;
+        this.board = board;
+        this.numberOfCards = nbCards;
+        this.hand = new Deck("hand");
     }
 
     /**
@@ -63,10 +73,15 @@ public class Player
 
 
     /**
-     * todo : what is that function ?
+     * Receieve a card, put the card in the player's hand
      */
-    public  void giveCard()
+    public  void giveCard(Card card)
     {
+        this.hand.addCard(card);
+    }
 
+    public int getNumberOfCards()
+    {
+        return this.numberOfCards;
     }
 }
