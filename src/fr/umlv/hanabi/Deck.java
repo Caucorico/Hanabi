@@ -1,8 +1,12 @@
 package fr.umlv.hanabi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
+/**
+ *
+ */
 public class Deck implements Iterable
 {
     /**
@@ -15,6 +19,26 @@ public class Deck implements Iterable
      */
     private String type;
 
+    public Deck(String type)
+    {
+        this.type = type;
+        this.cards = new ArrayList<>();
+    }
+
+    public Deck(String type, ArrayList<Card> cards)
+    {
+        this(type);
+        this.cards = cards;
+    }
+
+    /**
+     * Shuffle the deck
+     */
+    public void shuffle()
+    {
+        Collections.shuffle(this.cards);
+    }
+
 
     /**
      * Add a card to the deck.
@@ -22,7 +46,7 @@ public class Deck implements Iterable
      */
     public void addCard(Card card)
     {
-
+        this.cards.add(card);
     }
 
     /**
@@ -32,7 +56,7 @@ public class Deck implements Iterable
      */
     public Card getCard(int id)
     {
-        return null;
+        return this.cards.remove(id);
     }
 
 

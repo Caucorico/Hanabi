@@ -1,7 +1,11 @@
 package fr.umlv.hanabi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+/**
+ *
+ */
 public class Board
 {
     /**
@@ -79,35 +83,95 @@ public class Board
      */
     public Board(int numberPlayer)
     {
+        int numberCards;
+        this.turn = 0;
+        this.redTokenMax = 3;
+        this.redTokenPlayed = 0;
+        this.blueTokenMax = 8;
+        this.blueTokenPlayed = 0;
+        this.players = new ArrayList<>();
 
+        if ( numberPlayer < 2 )
+            throw new IllegalArgumentException("The game need at least 2 person to begin");
+        else if ( numberPlayer < 4 )
+            numberCards = 5;
+        else if ( numberPlayer < 6 )
+            numberCards = 4;
+        else
+            throw new IllegalArgumentException("The game can't be played with more than 5 players");
+
+        for ( int i = 0 ; i < numberPlayer ;i++ )
+        {
+            this.players.add(new Player(i, numberCards, this));
+        }
     }
 
     /**
      * Create the main deck
      */
-    public void createDeck()
+    private void createDeck()
     {
+        String[] colors = { "red", "blue", "yellow", "green", "white" };
+        this.mainDeck = new Deck("mainDeck");
 
+        for (String color : colors )
+        {
+            for ( int i = 0 ; i < 5 ; i++ )
+            {
+                this.mainDeck.addCard(new Card(color, i+1));
+            }
+        }
     }
 
     /**
-     * Shuffle the main deck
+     * Init the fireworks stack of cards.
      */
-    public void shuffleDeck()
+    private void initFireworks()
     {
+        this.redFireworks = new Deck("fireworks");
+        this.blueFireworks = new Deck("fireworks");
+        this.yellowFireworks = new Deck("fireworks");
+        this.greenFireworks = new Deck("fireworks");
+        this.whiteFireworks = new Deck("fireworks");
+    }
 
+
+    /**
+     * Shuffle the main deck.
+     */
+    private void shuffleDeck()
+    {
+        this.mainDeck.shuffle();
     }
 
     /**
-     * Start of the game
+     * Distribute the cards to the players at the beginning of the game.
+     */
+    private void initDistribute()
+    {
+        for ( Player player : this.players )
+        {
+            for ( int i = 0 ; i < player.getNumberOfCards() ; i++ )
+            {
+                player.giveCard(this.mainDeck.getCard(0));
+            }
+        }
+    }
+
+    /**
+     * Start of the game.
      */
     public void start()
     {
-
+        this.createDeck();
+        this.shuffleDeck();
+        this.initDistribute();
+        this.initFireworks();
+        this.discard = new Deck("discard");
     }
 
     /**
-     * run game
+     * run game.
      */
     public void loop()
     {
@@ -115,7 +179,7 @@ public class Board
     }
 
     /**
-     * End of the game
+     * End of the game.
      */
     public void end()
     {
