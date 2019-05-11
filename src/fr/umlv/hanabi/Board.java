@@ -1,7 +1,8 @@
 package fr.umlv.hanabi;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -48,28 +49,30 @@ public class Board
     /**
      * The blue fireworks.
      */
-    private Deck blueFireworks;
+    //private Deck blueFireworks;
 
     /**
      * The red fireworks.
      */
-    private Deck redFireworks;
+    //private Deck redFireworks;
 
     /**
      * The yellow fireworks.
      */
-    private Deck yellowFireworks;
+    //private Deck yellowFireworks;
 
     /**
      * The white fireworks.
      */
-    private Deck whiteFireworks;
+    //private Deck whiteFireworks;
 
     /**
      * The green fireworks.
      */
-    private Deck greenFireworks;
+    //private Deck greenFireworks;
 
+    // Suggestion ?
+    private Map<String, Deck> fireworks;
     /* ########################################### */
 
     /**
@@ -128,11 +131,12 @@ public class Board
      */
     private void initFireworks()
     {
-        this.redFireworks = new Deck("fireworks");
-        this.blueFireworks = new Deck("fireworks");
-        this.yellowFireworks = new Deck("fireworks");
-        this.greenFireworks = new Deck("fireworks");
-        this.whiteFireworks = new Deck("fireworks");
+    	this.fireworks = new HashMap<>(5);
+    	this.fireworks.put("red", new Deck("fireworks"));
+    	this.fireworks.put("blue", new Deck("fireworks"));
+    	this.fireworks.put("yellow", new Deck("fireworks"));
+    	this.fireworks.put("green", new Deck("fireworks"));
+    	this.fireworks.put("white", new Deck("fireworks"));
     }
 
 
@@ -197,12 +201,20 @@ public class Board
 
     /**
      * Play a card on the board.
-     * @param color Color of the stack.
+     * @param color Color of the stack. //Le joueur n'a pas a choisir le feu d'artifice
      * @param card The card.
      */
-    public void playCard(String color, Card card )
+    public void playCard(Card card)
     {
-
+    	String color = card.getColor();
+    	int size = this.fireworks.get(color).getDeckSize();
+    	if ( size + 1 == card.getNumber() ) {
+    		this.fireworks.get(color).addCard(card);
+    	}
+    	else {
+    		this.discardCard(card);
+    		this.redTokenPlayed++;
+    	}
     }
 
     /**
@@ -211,7 +223,7 @@ public class Board
      */
     public void discardCard( Card card )
     {
-
+    	this.discard.addCard(card);
     }
 
 
@@ -226,4 +238,12 @@ public class Board
         return true;
     }
 
+    public static void main(String[] args) {
+		Board b = new Board(3);
+		b.start();
+		for ( int i = 0 ; i < 3 ; ++i ) {
+			b.players.get(b.turn).turn();
+			b.turn++;
+		}
+	}
 }

@@ -39,8 +39,26 @@ public class Card
      *
      * @param back draw back or not
      */
-    public void display(boolean back)
+    public String display(boolean back)
     {
-
+    	return this.toString();
+    }
+    
+    /*
+     * Return the color of the card
+     */
+    public String getColor() {
+    	return color;
+    }
+    
+    /*
+     * Return the number of the card
+     */
+    public int getNumber() {
+    	return number;
+    }
+    
+    public String toString() {
+    	return "| " + this.number + " " + this.color.charAt(0) + " |-";
     }
 }
