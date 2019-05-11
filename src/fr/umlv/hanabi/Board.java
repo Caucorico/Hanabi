@@ -10,7 +10,7 @@ import java.util.Map;
 public class Board
 {
     /**
-     * The player turn (2 if it is the turn of player 2).
+     * The player turn (starts at 0).
      */
     private int turn;
 
@@ -44,36 +44,10 @@ public class Board
      */
     private Deck mainDeck;
 
-    /* ########  find better structure ? ######## */
-
-    /**
-     * The blue fireworks.
+    /*
+     * HashMap of Decks representing fireworks by color
      */
-    //private Deck blueFireworks;
-
-    /**
-     * The red fireworks.
-     */
-    //private Deck redFireworks;
-
-    /**
-     * The yellow fireworks.
-     */
-    //private Deck yellowFireworks;
-
-    /**
-     * The white fireworks.
-     */
-    //private Deck whiteFireworks;
-
-    /**
-     * The green fireworks.
-     */
-    //private Deck greenFireworks;
-
-    // Suggestion ?
     private Map<String, Deck> fireworks;
-    /* ########################################### */
 
     /**
      * The discard.
@@ -119,10 +93,16 @@ public class Board
 
         for (String color : colors )
         {
-            for ( int i = 0 ; i < 5 ; i++ )
-            {
-                this.mainDeck.addCard(new Card(color, i+1));
-            }
+        	this.mainDeck.addCard(new Card(color, 1));
+        	this.mainDeck.addCard(new Card(color, 1));
+        	this.mainDeck.addCard(new Card(color, 1));
+            this.mainDeck.addCard(new Card(color, 2));
+            this.mainDeck.addCard(new Card(color, 2));
+            this.mainDeck.addCard(new Card(color, 3));
+            this.mainDeck.addCard(new Card(color, 3));
+            this.mainDeck.addCard(new Card(color, 4));
+            this.mainDeck.addCard(new Card(color, 4));
+            this.mainDeck.addCard(new Card(color, 5));
         }
     }
 
@@ -179,7 +159,18 @@ public class Board
      */
     public void loop()
     {
-
+    	int nbPlayers = this.players.size();
+    	while ( ! checkVictory() ) {
+    		this.display();
+    		this.players.get(turn).turn();
+    		
+    		if ( mainDeck.isEmpty() ) {
+    			// Game lost (every player has one turn remaining before end of game
+    			// Comment on l'implémente ? 
+    			return;
+    		}
+    		turn = (turn + 1) % nbPlayers;
+    	}
     }
 
     /**
@@ -187,21 +178,43 @@ public class Board
      */
     public void end()
     {
-
+    	int score = 0;
+    	for ( Map.Entry<String, Deck> entry : fireworks.entrySet() ) {
+    		score += entry.getValue().getDeckSize();
+    	}
+    	System.out.println("Your score : " + score);
     }
 
+    /**
+     * Checks if each firework has been completed.
+     * @return true if every firework has been completed, false otherwise
+     */
+    private boolean checkFireworks() {
+    	for ( Map.Entry<String, Deck> entry : fireworks.entrySet() ) {
+    		if ( entry.getValue().getDeckSize() != 5 ) {
+    			return false;
+    		}
+    	}
+    	return true;
+    }
     /**
      * Check if the game is terminate.
      * @return game terminate or not.
      */
     public boolean checkVictory()
     {
+        if ( redTokenPlayed == redTokenMax ) {
+        	return true;
+        }
+        if ( ! mainDeck.isEmpty() && checkFireworks() ) {
+        	return true;
+        }
+        // Je sais pas encore comment gérer si la pioche est vide (= partie finie mais encore un tour)
         return false;
     }
 
     /**
      * Play a card on the board.
-     * @param color Color of the stack. //Le joueur n'a pas a choisir le feu d'artifice
      * @param card The card.
      */
     public void playCard(Card card)
@@ -226,9 +239,23 @@ public class Board
     	this.discard.addCard(card);
     }
 
+    /*
+     * Draw a card from the main deck
+     */
+    public Card drawCard() {
+    	return this.mainDeck.getCard(0);
+    }
+    
+    /**
+     * Check if the main deck is empty
+     * @return true if the deck is empty, false otherwise
+     */
+    public boolean isMainDeckEmpty() {
+    	return mainDeck.isEmpty();
+    }
 
     /**
-     * Give an information to an other player
+     * Give an information to another player
      * @param action color or number
      * @param possibility which cards
      * @return return false if the action is not allowed
@@ -237,13 +264,28 @@ public class Board
     {
         return true;
     }
+    
+    /**
+     * Displays a visualization of the board in its current state
+     */
+    public void display() {
+    	System.out.println("-------------------------Board-------------------------");
+    	System.out.println(this.redTokenPlayed + " red tokens played");
+		System.out.println(mainDeck.getDeckSize() + " cards is the main deck");
+		System.out.println(discard.getDeckSize() + " cards in the discard");
+		System.out.println("Fireworks : ");
+		this.fireworks.forEach((key, deck) -> {
+			System.out.printf("%7s : ", key);
+			deck.display(false);
+		});
+		System.out.println("--------------------------------------------------------");
+    }
 
     public static void main(String[] args) {
 		Board b = new Board(3);
 		b.start();
-		for ( int i = 0 ; i < 3 ; ++i ) {
-			b.players.get(b.turn).turn();
-			b.turn++;
-		}
+		b.loop();
+		System.out.println("End of game");
+		b.end();
 	}
 }
