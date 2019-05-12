@@ -55,6 +55,11 @@ public class Board
     private Deck discard;
 
     /**
+     * The lasts players who can play
+     */
+    private int lastTurn;
+
+    /**
      * Board constructor.
      * @param numberPlayer Number of players for this game.
      */
@@ -62,6 +67,7 @@ public class Board
     {
         int numberCards;
         this.turn = 0;
+        this.lastTurn = -1;
         this.redTokenMax = 3;
         this.redTokenPlayed = 0;
         this.blueTokenMax = 8;
@@ -163,13 +169,16 @@ public class Board
     	while ( ! checkVictory() ) {
     		this.display();
     		this.players.get(turn).turn();
-    		
-    		if ( mainDeck.isEmpty() ) {
-    			// Game lost (every player has one turn remaining before end of game
-    			// Comment on l'implémente ? 
-    			return;
-    		}
+
     		turn = (turn + 1) % nbPlayers;
+
+            if ( mainDeck.isEmpty() && this.lastTurn == -1 ) {
+                this.lastTurn = this.players.size();
+            }
+            else if ( this.mainDeck.isEmpty() && this.lastTurn != -1 )
+            {
+                this.lastTurn--;
+            }
     	}
     }
 
@@ -203,13 +212,20 @@ public class Board
      */
     public boolean checkVictory()
     {
+        /* End of the game when too many errors has been played */
         if ( redTokenPlayed == redTokenMax ) {
         	return true;
         }
-        if ( ! mainDeck.isEmpty() && checkFireworks() ) {
+        /* End of the game when the last turn is over */
+        if ( this.lastTurn == 0 ) {
+            return true;
+        }
+
+        /* End of the game when all the fireworks are completed */
+        if ( checkFireworks() ) {
         	return true;
         }
-        // Je sais pas encore comment gérer si la pioche est vide (= partie finie mais encore un tour)
+
         return false;
     }
 
