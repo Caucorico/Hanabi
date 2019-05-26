@@ -1,4 +1,4 @@
-package fr.umlv.hanabi;
+package fr.umlv.hanabi.models;
 
 import java.util.Iterator;
 

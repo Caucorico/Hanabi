@@ -1,4 +1,9 @@
-package fr.umlv.hanabi;
+package fr.umlv.hanabi.models;
+
+import fr.umlv.hanabi.controllers.BoardController;
+import fr.umlv.hanabi.models.Board;
+import fr.umlv.hanabi.models.Card;
+import fr.umlv.hanabi.models.Deck;
 
 import java.util.Scanner;
 
@@ -17,6 +22,8 @@ public class Player
      */
     private Board board;
 
+    private BoardController boardController;
+
     /**
      * The player's hand
      */
@@ -30,10 +37,10 @@ public class Player
     /**
      * Player object constructor.
      */
-    public Player(int number, int nbCards, Board board)
+    public Player(int number, int nbCards, BoardController boardController)
     {
         this.number = number;
-        this.board = board;
+        this.boardController = boardController;
         this.numberOfCards = nbCards;
         this.hand = new Deck("hand");
     }
@@ -81,10 +88,10 @@ public class Player
     	}
     	
     	Card card = this.hand.getCard(choice-1);
-    	this.board.playCard(card);
+    	this.boardController.playCard(card);
     	
     	if ( ! this.board.isMainDeckEmpty() ) {
-    		this.giveCard(this.board.drawCard());
+    		this.giveCard(this.boardController.drawCard());
         }
     }
 
@@ -103,10 +110,10 @@ public class Player
     	}
     	
     	Card card = this.hand.getCard(choice-1);  
-    	this.board.discardCard(card);
+    	this.boardController.discardCard(card);
     	
     	if ( ! this.board.isMainDeckEmpty() ) {
-    		this.giveCard(this.board.drawCard());
+    		this.giveCard(this.boardController.drawCard());
     	}
     }
 
@@ -121,7 +128,7 @@ public class Player
 
     /**
      * Put a card in the player's hand
-     * @param the card to add
+     * @param card the card to add
      */
     public  void giveCard(Card card)
     {

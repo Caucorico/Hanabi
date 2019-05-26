@@ -1,4 +1,4 @@
-package fr.umlv.hanabi;
+package fr.umlv.hanabi.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +92,7 @@ public class Board
     /**
      * Create the main deck
      */
-    private void createDeck()
+    public void createDeck()
     {
         String[] colors = { "red", "blue", "yellow", "green", "white" };
         this.mainDeck = new Deck("mainDeck");
@@ -115,7 +115,7 @@ public class Board
     /**
      * Init the fireworks stack of cards.
      */
-    private void initFireworks()
+    public void initFireworks()
     {
     	this.fireworks = new HashMap<>(5);
     	this.fireworks.put("red", new Deck("fireworks"));
@@ -129,7 +129,7 @@ public class Board
     /**
      * Shuffle the main deck.
      */
-    private void shuffleDeck()
+    public void shuffleDeck()
     {
         this.mainDeck.shuffle();
     }
@@ -137,7 +137,7 @@ public class Board
     /**
      * Distribute the cards to the players at the beginning of the game.
      */
-    private void initDistribute()
+    public void initDistribute()
     {
         for ( Player player : this.players )
         {
@@ -146,52 +146,6 @@ public class Board
                 player.giveCard(this.mainDeck.getCard(0));
             }
         }
-    }
-
-    /**
-     * Start of the game.
-     */
-    public void start()
-    {
-        this.createDeck();
-        this.shuffleDeck();
-        this.initDistribute();
-        this.initFireworks();
-        this.discard = new Deck("discard");
-    }
-
-    /**
-     * run game.
-     */
-    public void loop()
-    {
-    	int nbPlayers = this.players.size();
-    	while ( ! checkVictory() ) {
-    		this.display();
-    		this.players.get(turn).turn();
-
-    		turn = (turn + 1) % nbPlayers;
-
-            if ( mainDeck.isEmpty() && this.lastTurn == -1 ) {
-                this.lastTurn = this.players.size();
-            }
-            else if ( this.mainDeck.isEmpty() && this.lastTurn != -1 )
-            {
-                this.lastTurn--;
-            }
-    	}
-    }
-
-    /**
-     * End of the game.
-     */
-    public void end()
-    {
-    	int score = 0;
-    	for ( Map.Entry<String, Deck> entry : fireworks.entrySet() ) {
-    		score += entry.getValue().getDeckSize();
-    	}
-    	System.out.println("Your score : " + score);
     }
 
     /**
@@ -206,6 +160,7 @@ public class Board
     	}
     	return true;
     }
+
     /**
      * Check if the game is terminate.
      * @return game terminate or not.
@@ -229,38 +184,6 @@ public class Board
         return false;
     }
 
-    /**
-     * Play a card on the board.
-     * @param card The card.
-     */
-    public void playCard(Card card)
-    {
-    	String color = card.getColor();
-    	int size = this.fireworks.get(color).getDeckSize();
-    	if ( size + 1 == card.getNumber() ) {
-    		this.fireworks.get(color).addCard(card);
-    	}
-    	else {
-    		this.discardCard(card);
-    		this.redTokenPlayed++;
-    	}
-    }
-
-    /**
-     * Put a card on the board discard.
-     * @param card The card to discard
-     */
-    public void discardCard( Card card )
-    {
-    	this.discard.addCard(card);
-    }
-
-    /*
-     * Draw a card from the main deck
-     */
-    public Card drawCard() {
-    	return this.mainDeck.getCard(0);
-    }
     
     /**
      * Check if the main deck is empty
@@ -270,38 +193,47 @@ public class Board
     	return mainDeck.isEmpty();
     }
 
-    /**
-     * Give an information to another player
-     * @param action color or number
-     * @param possibility which cards
-     * @return return false if the action is not allowed
-     */
-    public boolean giveInfo( int action, int possibility )
-    {
-        return true;
-    }
-    
-    /**
-     * Displays a visualization of the board in its current state
-     */
-    public void display() {
-    	System.out.println("-------------------------Board-------------------------");
-    	System.out.println(this.redTokenPlayed + " red tokens played");
-		System.out.println(mainDeck.getDeckSize() + " cards is the main deck");
-		System.out.println(discard.getDeckSize() + " cards in the discard");
-		System.out.println("Fireworks : ");
-		this.fireworks.forEach((key, deck) -> {
-			System.out.printf("%7s : ", key);
-			deck.display(false);
-		});
-		System.out.println("--------------------------------------------------------");
+    public Deck getDiscard() {
+        return discard;
     }
 
-    public static void main(String[] args) {
-		Board b = new Board(3);
-		b.start();
-		b.loop();
-		System.out.println("End of game");
-		b.end();
-	}
+    public void setDiscard(Deck discard) {
+        this.discard = discard;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public Deck getMainDeck() {
+        return mainDeck;
+    }
+
+    public int getLastTurn() {
+        return lastTurn;
+    }
+
+    public void setLastTurn(int lastTurn) {
+        this.lastTurn = lastTurn;
+    }
+
+    public Map<String, Deck> getFireworks() {
+        return fireworks;
+    }
+
+    public int getRedTokenPlayed() {
+        return redTokenPlayed;
+    }
+
+    public void setRedTokenPlayed(int redTokenPlayed) {
+        this.redTokenPlayed = redTokenPlayed;
+    }
 }

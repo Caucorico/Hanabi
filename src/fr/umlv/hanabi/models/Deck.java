@@ -1,4 +1,6 @@
-package fr.umlv.hanabi;
+package fr.umlv.hanabi.models;
+
+import fr.umlv.hanabi.models.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
