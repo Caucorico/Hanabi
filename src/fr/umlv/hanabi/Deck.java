@@ -66,9 +66,24 @@ public class Deck implements Iterable
      */
     public void display(boolean back)
     {
-
+    	int size = getDeckSize();
+    	StringBuilder s = new StringBuilder();
+    	for ( int i = 0 ; i < size ; ++i ) {
+    		s.append(this.cards.get(i).display(back));
+    	}
+    	System.out.println(s);
     }
 
+    /**
+     * Return the number of cards in the deck
+     */
+    public int getDeckSize() {
+    	return this.cards.size();
+    }
+    
+    public boolean isEmpty() {
+    	return this.cards.size() == 0;
+    }
     @Override
     public Iterator iterator()
     {
