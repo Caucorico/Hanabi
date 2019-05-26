@@ -20,7 +20,7 @@ public class Player
     /**
      * The board of the player.
      */
-    private Board board;
+    //private Board board;
 
     private BoardController boardController;
 

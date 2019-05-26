@@ -1,5 +1,7 @@
 package fr.umlv.hanabi.models;
 
+import fr.umlv.hanabi.controllers.BoardController;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +65,7 @@ public class Board
      * Board constructor.
      * @param numberPlayer Number of players for this game.
      */
-    public Board(int numberPlayer)
+    public Board(int numberPlayer, BoardController boardController)
     {
         int numberCards;
         this.turn = 0;
@@ -85,7 +87,7 @@ public class Board
 
         for ( int i = 0 ; i < numberPlayer ;i++ )
         {
-            this.players.add(new Player(i, numberCards, this));
+            this.players.add(new Player(i, numberCards, boardController));
         }
     }
 

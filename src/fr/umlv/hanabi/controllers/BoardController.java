@@ -15,8 +15,8 @@ public class BoardController
 
     public BoardController(int numberPlayer)
     {
-        this.board = new Board(numberPlayer);
-        this.view = new BoardView();
+        this.board = new Board(numberPlayer, this);
+        this.view = new BoardView(this.board);
     }
 
     /**
