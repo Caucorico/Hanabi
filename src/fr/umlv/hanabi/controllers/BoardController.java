@@ -108,4 +108,12 @@ public class BoardController
     {
         return true;
     }
+
+    /**
+     * Check if the main deck is empty
+     * @return true if the deck is empty, false otherwise
+     */
+    public boolean isMainDeckEmpty() {
+        return this.board.getMainDeck().isEmpty();
+    }
 }
