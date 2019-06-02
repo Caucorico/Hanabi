@@ -18,13 +18,6 @@ public class Player
     private int number;
 
     /**
-     * The board of the player.
-     */
-    //private Board board;
-
-    private BoardController boardController;
-
-    /**
      * The player's hand
      */
     private Deck hand;
@@ -37,10 +30,9 @@ public class Player
     /**
      * Player object constructor.
      */
-    public Player(int number, int nbCards, BoardController boardController)
+    public Player(int number, int nbCards)
     {
         this.number = number;
-        this.boardController = boardController;
         this.numberOfCards = nbCards;
         this.hand = new Deck("hand");
     }

@@ -3,52 +3,66 @@ package fr.umlv.hanabi.controllers;
 import fr.umlv.hanabi.models.Board;
 import fr.umlv.hanabi.models.Card;
 import fr.umlv.hanabi.models.Deck;
+import fr.umlv.hanabi.models.Player;
 import fr.umlv.hanabi.views.BoardView;
 
 import java.util.Map;
 
 public class BoardController
 {
-    private Board board;
 
-    private BoardView view;
-
-    public BoardController(int numberPlayer)
+    public void runGame(int nbrPlayers)
     {
-        this.board = new Board(numberPlayer, this);
-        this.view = new BoardView(this.board);
+        Board board = new Board( nbrPlayers );
+        BoardController.start( board );
+        BoardController.loop( board );
+        BoardController.end( board );
     }
 
     /**
      * Start of the game.
      */
-    public void start()
+    public static void start(Board board)
     {
-        this.board.createDeck();
-        this.board.shuffleDeck();
-        this.board.initDistribute();
-        this.board.initFireworks();
-        this.board.setDiscard(new Deck("discard"));
+        board.createDeck();
+        board.shuffleDeck();
+        BoardController.initDistribute(board);
+        board.initFireworks();
+        board.setDiscard(new Deck("discard"));
+    }
+
+    /**
+     * Distribute the cards to the players at the beginning of the game.
+     */
+    public static void initDistribute(Board board)
+    {
+        for ( Player player : board.getPlayers() )
+        {
+            for ( int i = 0 ; i < player.getNumberOfCards() ; i++ )
+            {
+                PlayerController.giveCard(player, board.getMainDeck().getCard(0));
+            }
+        }
     }
 
     /**
      * run game.
      */
-    public void loop()
+    public static void loop(Board board)
     {
-        int nbPlayers = this.board.getPlayers().size();
-        while ( !this.board.checkVictory() ) {
-            this.view.display();
-            this.board.getPlayers().get(this.board.getTurn()).turn();
+        int nbPlayers = board.getPlayers().size();
+        while ( !board.checkVictory() ) {
+            BoardView.display(board);
+            PlayerController.turn(board, board.getPlayers().get(board.getTurn()));
 
-            this.board.setTurn((this.board.getTurn() + 1) % nbPlayers);
+            board.setTurn((board.getTurn() + 1) % nbPlayers);
 
-            if ( this.board.getMainDeck().isEmpty() && this.board.getLastTurn() == -1 ) {
-                this.board.setLastTurn(this.board.getPlayers().size());
+            if ( board.getMainDeck().isEmpty() && board.getLastTurn() == -1 ) {
+                board.setLastTurn(board.getPlayers().size());
             }
-            else if ( this.board.getMainDeck().isEmpty() && this.board.getLastTurn() != -1 )
+            else if ( board.getMainDeck().isEmpty() && board.getLastTurn() != -1 )
             {
-                this.board.setLastTurn(this.board.getLastTurn()-1);
+                board.setLastTurn(board.getLastTurn()-1);
             }
         }
     }
@@ -56,10 +70,10 @@ public class BoardController
     /**
      * End of the game.
      */
-    public void end()
+    public static void end(Board board)
     {
         int score = 0;
-        for ( Map.Entry<String, Deck> entry : this.board.getFireworks().entrySet() ) {
+        for ( Map.Entry<String, Deck> entry : board.getFireworks().entrySet() ) {
             score += entry.getValue().getDeckSize();
         }
         System.out.println("Your score : " + score);
@@ -69,16 +83,16 @@ public class BoardController
      * Play a card on the board.
      * @param card The card.
      */
-    public void playCard(Card card)
+    public static void playCard(Board board, Card card)
     {
         String color = card.getColor();
-        int size = this.board.getFireworks().get(color).getDeckSize();
+        int size = board.getFireworks().get(color).getDeckSize();
         if ( size + 1 == card.getNumber() ) {
-            this.board.getFireworks().get(color).addCard(card);
+            board.getFireworks().get(color).addCard(card);
         }
         else {
-            this.discardCard(card);
-            this.board.setRedTokenPlayed(this.board.getRedTokenPlayed()+1);
+            BoardController.discardCard(board, card);
+            board.setRedTokenPlayed(board.getRedTokenPlayed()+1);
         }
     }
 
@@ -86,16 +100,17 @@ public class BoardController
      * Put a card on the board discard.
      * @param card The card to discard
      */
-    public void discardCard( Card card )
+    public static void discardCard( Board board, Card card )
     {
-        this.board.getDiscard().addCard(card);
+        board.getDiscard().addCard(card);
     }
 
     /*
      * Draw a card from the main deck
      */
-    public Card drawCard() {
-        return this.board.getMainDeck().getCard(0);
+    public static Card drawCard(Board board)
+    {
+        return board.getMainDeck().getCard(0);
     }
 
     /**
@@ -107,13 +122,5 @@ public class BoardController
     public boolean giveInfo( int action, int possibility )
     {
         return true;
-    }
-
-    /**
-     * Check if the main deck is empty
-     * @return true if the deck is empty, false otherwise
-     */
-    public boolean isMainDeckEmpty() {
-        return this.board.getMainDeck().isEmpty();
     }
 }

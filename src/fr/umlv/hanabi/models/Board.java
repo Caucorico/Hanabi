@@ -65,7 +65,7 @@ public class Board
      * Board constructor.
      * @param numberPlayer Number of players for this game.
      */
-    public Board(int numberPlayer, BoardController boardController)
+    public Board(int numberPlayer)
     {
         int numberCards;
         this.turn = 0;
@@ -87,7 +87,7 @@ public class Board
 
         for ( int i = 0 ; i < numberPlayer ;i++ )
         {
-            this.players.add(new Player(i, numberCards, boardController));
+            this.players.add(new Player(i, numberCards));
         }
     }
 
@@ -136,19 +136,6 @@ public class Board
         this.mainDeck.shuffle();
     }
 
-    /**
-     * Distribute the cards to the players at the beginning of the game.
-     */
-    public void initDistribute()
-    {
-        for ( Player player : this.players )
-        {
-            for ( int i = 0 ; i < player.getNumberOfCards() ; i++ )
-            {
-                player.giveCard(this.mainDeck.getCard(0));
-            }
-        }
-    }
 
     /**
      * Checks if each firework has been completed.

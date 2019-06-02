@@ -1,5 +1,6 @@
 package fr.umlv.hanabi.controllers;
 
+import fr.umlv.hanabi.models.Board;
 import fr.umlv.hanabi.models.Card;
 import fr.umlv.hanabi.models.Player;
 
@@ -7,26 +8,17 @@ import java.util.Scanner;
 
 public class PlayerController
 {
-    private Player player;
-
-    private BoardController boardController;
-
-    public PlayerController(BoardController boardController)
-    {
-
-        this.boardController = boardController;
-    }
 
     /**
      * Function call when it is the player turn.
      */
-    public void turn()
+    public static void turn(Board board, Player player)
     {
         System.out.println("Player " +
-                (this.player.getNumber()+1) + ", it's your turn!\n What do you want to do ?\n"
+                (player.getNumber()+1) + ", it's your turn!\n What do you want to do ?\n"
                 + "1) Play a card.\n2) Discard a card.\n3) Give an information."
                 + "\nYour cards : ");
-        this.player.getHand().display(false);
+        player.getHand().display(false);
 
         int choice = 0;
         while ( choice <= 0 || choice >= 4 ) {
@@ -37,61 +29,61 @@ public class PlayerController
             }
         }
         switch ( choice ) {
-            case 1 : this.playCard(); break;
+            case 1 : PlayerController.playCard( board, player ); break;
             /* To implement in phase 2 : dealing with blue tokens before calling discardCard()*/
-            case 2 : this.discardCard(); break;
-            case 3 : this.giveInfo(); break;
+            case 2 : PlayerController.discardCard( board, player); break;
+            case 3 : PlayerController.giveInfo(); break;
         }
     }
 
     /**
      * Function call when the player decide to play a card.
      */
-    public void playCard()
+    public static void playCard(Board board, Player player)
     {
         int choice = 0;
 
         System.out.println("Which card from your hand do you want to play?\n"
-                + "Select a number between 1 and " + this.player.getHand().getDeckSize());
+                + "Select a number between 1 and " + player.getHand().getDeckSize());
 
-        while ( choice <= 0 || choice > this.player.getHand().getDeckSize() ) {
+        while ( choice <= 0 || choice > player.getHand().getDeckSize() ) {
             choice = new Scanner(System.in).nextInt();
         }
 
-        Card card = this.player.getHand().getCard(choice-1);
-        this.boardController.playCard(card);
+        Card card = player.getHand().getCard(choice-1);
+        BoardController.playCard(board, card);
 
-        if ( ! this.boardController.isMainDeckEmpty() ) {
-            this.giveCard(this.boardController.drawCard());
+        if ( !board.isMainDeckEmpty() ) {
+            PlayerController.giveCard(player, BoardController.drawCard(board));
         }
     }
 
     /**
      * Function call when the player decide to discard a card.
      */
-    public void discardCard()
+    public static void discardCard(Board board, Player player)
     {
         int choice = 0;
 
         System.out.println("Which card from your hand do you want to discard?\n"
-                + "Select a number between 1 and " + this.player.getHand().getDeckSize());
+                + "Select a number between 1 and " + player.getHand().getDeckSize());
 
-        while ( choice <= 0 || choice > this.player.getHand().getDeckSize() ) {
+        while ( choice <= 0 || choice > player.getHand().getDeckSize() ) {
             choice = new Scanner(System.in).nextInt();
         }
 
-        Card card = this.player.getHand().getCard(choice-1);
-        this.boardController.discardCard(card);
+        Card card = player.getHand().getCard(choice-1);
+        BoardController.discardCard(board, card);
 
-        if ( ! this.boardController.isMainDeckEmpty() ) {
-            this.giveCard(this.boardController.drawCard());
+        if ( !board.isMainDeckEmpty() ) {
+            PlayerController.giveCard(player, BoardController.drawCard(board));
         }
     }
 
     /**
      * Function call when the player decide to give an information to an other player.
      */
-    public void giveInfo()
+    public static void giveInfo()
     {
 
     }
@@ -100,8 +92,8 @@ public class PlayerController
      * Put a card in the player's hand
      * @param card the card to add
      */
-    public  void giveCard(Card card)
+    public static void giveCard(Player player, Card card)
     {
-        this.player.getHand().addCard(card);
+        player.getHand().addCard(card);
     }
 }
