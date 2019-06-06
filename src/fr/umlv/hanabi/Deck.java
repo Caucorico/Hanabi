@@ -73,7 +73,42 @@ public class Deck implements Iterable
     	}
     	System.out.println(s);
     }
+    
+    public ArrayList<String> getColors() {
+    	ArrayList<String> colors = new ArrayList<>();
+    	for ( int i = 0 ; i < this.cards.size() ; ++i ) {
+    		if ( ! colors.contains(this.cards.get(i).getColor()) ) {
+    			colors.add(this.cards.get(i).getColor());
+    		}
+    	}
+    	return colors;
+    }
+    
+    public ArrayList<Integer> getNumbers() {
+    	ArrayList<Integer> numbers = new ArrayList<>();
+    	for ( int i = 0 ; i < this.cards.size() ; ++i ) {
+    		if ( ! numbers.contains(this.cards.get(i).getNumber()) ) {
+    			numbers.add(this.cards.get(i).getNumber());
+    		}
+    	}
+    	return numbers;
+    }
 
+    public void updateVisibility(String color) {
+    	for ( Card c : this.cards ) {
+    		if ( c.getColor().equals(color)) {
+    			c.setColorRevealed(true);
+    		}
+    	}
+    }
+    
+    public void updateVisibility(int number) {
+    	for ( Card c : this.cards ) {
+    		if ( c.getNumber() == number ) {
+    			c.setNumberRevealed(true);
+    		}
+    	}
+    }
     /**
      * Return the number of cards in the deck
      */

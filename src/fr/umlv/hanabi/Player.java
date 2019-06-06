@@ -1,5 +1,6 @@
 package fr.umlv.hanabi;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -45,23 +46,25 @@ public class Player
     {
     	System.out.println("Player " + 
     		(this.number+1) + ", it's your turn!\n What do you want to do ?\n"
-    				+ "1) Play a card.\n2) Discard a card.\n3) Give an information."
-    				+ "\nYour cards : ");
-    	this.hand.display(false);
+    				+ "1) Play a card.\n2) Discard a card.\n3) Give an information.");
     	
     	int choice = 0;
     	while ( choice <= 0 || choice >= 4 ) {
     		choice = new Scanner(System.in).nextInt();
-    		if ( choice == 3 ) {
-    			System.out.println("This option is not implemented yet, sorry!");
-    			choice = 0;
-    		}
     	}
     	switch ( choice ) {
     		case 1 : playCard(); break;
     		/* To implement in phase 2 : dealing with blue tokens before calling discardCard()*/
-    		case 2 : discardCard(); break;
-    		case 3 : giveInfo(); break;
+    		case 2 : this.board.addBlueToken(); discardCard(); break;
+    		case 3 : 
+    			if ( this.board.takeBlueToken() ) {
+    				giveInfo(); 
+    			}
+    			else {
+    				System.out.println("There is no more blue token.");
+    				turn();
+    			}
+    			break;
     	}
     }
 
@@ -110,13 +113,61 @@ public class Player
     	}
     }
 
+    public Deck getHand() {
+    	return this.hand;
+    }
 
+    public void showHand(boolean self)  {
+    	this.hand.display(self);
+    }
     /**
      * Function call when the player decide to give an information to an other player.
      */
     public void giveInfo()
     {
-
+    	int player = -1, action = 0, color = 0, number = 0;
+    	ArrayList<String> colors;
+    	ArrayList<Integer> numbers;
+    	
+    	System.out.println("To which player do you want to give an information ?");
+    	while ( player == this.number || player < 0 || player >= this.board.getNbPlayers() ) {
+    		player = new Scanner(System.in).nextInt() - 1;
+    	}
+    	
+    	System.out.println("What kind of info do you want to give to P" + (player+1) + ": ");
+    	System.out.println("1) Color\n2)Number");
+    	
+    	while ( action <= 0 || action > 2 ) {
+    		action = new Scanner(System.in).nextInt();
+    	}
+    	
+    	// TODO : Factoriser ce code
+    	if ( action == 1 ) {
+    		System.out.println("Which color ? ");
+    		colors = this.board.getPlayer(player).getHand().getColors();
+    		for ( int i = 0 ; i < colors.size() ; ++i ) {
+    			System.out.println((i+1) + ") " + colors.get(i));
+    		}
+    		
+    		while ( color <= 0 || color > colors.size() ) {
+        		color = new Scanner(System.in).nextInt();
+        	}
+    		//update visibility
+    		this.board.getPlayer(player).getHand().updateVisibility(colors.get(color-1));
+    		
+    	}
+    	else {
+    		System.out.println("Which number ? ");
+    		numbers = this.board.getPlayer(player).getHand().getNumbers();
+    		for ( int i = 0 ; i < numbers.size() ; ++i ) {
+    			System.out.println((i+1) + ") " + numbers.get(i));
+    		}
+    		
+    		while ( number <= 0 || number > numbers.size() ) {
+    			number = new Scanner(System.in).nextInt();
+    		}
+    		this.board.getPlayer(player).getHand().updateVisibility(numbers.get(number-1));
+    	}
     }
 
     /**

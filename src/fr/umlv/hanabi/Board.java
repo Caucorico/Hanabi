@@ -286,9 +286,21 @@ public class Board
      */
     public void display() {
     	System.out.println("-------------------------Board-------------------------");
-    	System.out.println(this.redTokenPlayed + " red tokens played");
+    	System.out.println(this.redTokenPlayed + "/" + this.redTokenMax + " red tokens played");
+    	System.out.println(this.blueTokenPlayed + "/" + this.blueTokenMax  + " blue tokens played");
 		System.out.println(mainDeck.getDeckSize() + " cards is the main deck");
 		System.out.println(discard.getDeckSize() + " cards in the discard");
+		System.out.println("Other players's cards : ");
+		for ( int i = 0 ; i < this.players.size() ; ++i ) {
+			if ( i == turn ) {
+				System.out.print("My cards : ");
+				this.players.get(i).showHand(true);
+			}
+			else {
+				System.out.print("P" + (i+1) + " cards : ");
+				this.players.get(i).showHand(false);
+			}
+		}
 		System.out.println("Fireworks : ");
 		this.fireworks.forEach((key, deck) -> {
 			System.out.printf("%7s : ", key);
@@ -297,6 +309,27 @@ public class Board
 		System.out.println("--------------------------------------------------------");
     }
 
+    public int getNbPlayers() {
+    	return this.players.size();
+    }
+    
+    public boolean takeBlueToken() {
+    	if ( blueTokenPlayed < blueTokenMax ) {
+    		blueTokenPlayed++;
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public void addBlueToken() {
+    	if ( blueTokenPlayed > 0 ) {
+    		blueTokenPlayed--;
+    	}
+    }
+    
+    public Player getPlayer(int index) {
+    	return this.players.get(index);
+    }
     public static void main(String[] args) {
 		Board b = new Board(3);
 		b.start();

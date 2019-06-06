@@ -41,7 +41,23 @@ public class Card
      */
     public String display(boolean back)
     {
+    	String s = "";
+    	if ( back ) {
+    		if ( this.colorRevealed && this.numberRevealed ) {
+    			return this.toString();
+    		}
+    		else if ( this.colorRevealed ) {
+    			return "|  " + this.color.charAt(0) + "  |-";
+    		}
+    		else if ( this.numberRevealed ) {
+    			return "|  " + this.number  + "  |-";
+    		}
+    		else {
+    			return "|  X  |-";
+    		}
+    	}
     	return this.toString();
+    	
     }
     
     /*
@@ -56,6 +72,16 @@ public class Card
      */
     public int getNumber() {
     	return number;
+    }
+    
+    public Card setColorRevealed(boolean colorRevealed) {
+    	this.colorRevealed = colorRevealed;
+    	return this;
+    }
+    
+    public Card setNumberRevealed(boolean numberRevealed) {
+    	this.numberRevealed = numberRevealed;
+    	return this;
     }
     
     public String toString() {
