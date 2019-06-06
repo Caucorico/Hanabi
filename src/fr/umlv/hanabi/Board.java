@@ -3,6 +3,7 @@ package fr.umlv.hanabi;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -167,7 +168,11 @@ public class Board
     {
     	int nbPlayers = this.players.size();
     	while ( ! checkVictory() ) {
+    	    for(int i = 0 ; i < 5000 ; i++ ) System.out.println();
+    		System.out.println("Player " + (turn + 1) + " it's your turn ! Press enter to play");
+    		new Scanner(System.in).nextLine();
     		this.display();
+    		
     		this.players.get(turn).turn();
 
     		turn = (turn + 1) % nbPlayers;

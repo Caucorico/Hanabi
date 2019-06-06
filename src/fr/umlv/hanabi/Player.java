@@ -44,8 +44,7 @@ public class Player
      */
     public void turn()
     {
-    	System.out.println("Player " + 
-    		(this.number+1) + ", it's your turn!\n What do you want to do ?\n"
+    	System.out.println("What do you want to do ?\n"
     				+ "1) Play a card.\n2) Discard a card.\n3) Give an information.");
     	
     	int choice = 0;
