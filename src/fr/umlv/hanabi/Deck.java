@@ -2,12 +2,11 @@ package fr.umlv.hanabi;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 /**
  *
  */
-public class Deck implements Iterable
+public class Deck
 {
     /**
      * The cards of this deck.
@@ -16,12 +15,12 @@ public class Deck implements Iterable
 
     /**
      * The type of the deck (hand, mainDeck ,discard ,etc).
-     */
-    private String type;
+     
+    private String type;*/
 
     public Deck(String type)
     {
-        this.type = type;
+        /*this.type = type;*/
         this.cards = new ArrayList<>();
     }
 
@@ -118,10 +117,5 @@ public class Deck implements Iterable
     
     public boolean isEmpty() {
     	return this.cards.size() == 0;
-    }
-    @Override
-    public Iterator iterator()
-    {
-        return null;
     }
 }

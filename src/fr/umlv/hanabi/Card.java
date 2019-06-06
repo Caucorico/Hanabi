@@ -41,7 +41,6 @@ public class Card
      */
     public String display(boolean back)
     {
-    	String s = "";
     	if ( back ) {
     		if ( this.colorRevealed && this.numberRevealed ) {
     			return this.toString();

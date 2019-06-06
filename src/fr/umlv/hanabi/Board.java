@@ -295,6 +295,9 @@ public class Board
     	System.out.println(this.blueTokenPlayed + "/" + this.blueTokenMax  + " blue tokens played");
 		System.out.println(mainDeck.getDeckSize() + " cards is the main deck");
 		System.out.println(discard.getDeckSize() + " cards in the discard");
+		if ( discard.getDeckSize() > 0 ) {
+			System.out.println("Discard's top card : " + this.discard.getCard(this.discard.getDeckSize()-1).toString());
+		}
 		System.out.println("Other players's cards : ");
 		for ( int i = 0 ; i < this.players.size() ; ++i ) {
 			if ( i == turn ) {
