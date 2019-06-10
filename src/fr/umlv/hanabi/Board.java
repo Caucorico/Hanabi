@@ -316,11 +316,16 @@ public class Board
 		});
 		System.out.println("--------------------------------------------------------");
     }
-
+    /**
+     * @return the number of player in the board
+     */
     public int getNbPlayers() {
     	return this.players.size();
     }
-    
+    /**
+     * When a player takes a blue token from the board
+     * @return false is there is no more blue tocken, true otherwise
+     */
     public boolean takeBlueToken() {
     	if ( blueTokenPlayed < blueTokenMax ) {
     		blueTokenPlayed++;
@@ -328,16 +333,24 @@ public class Board
     	}
     	return false;
     }
-    
+    /**
+     * When a player give a blue tocken to the board
+     */
     public void addBlueToken() {
     	if ( blueTokenPlayed > 0 ) {
     		blueTokenPlayed--;
     	}
     }
-    
+    /**
+     * Get the player at the index given the array of players
+     * @param index index of the player
+     * @return the player found at the index
+     */
     public Player getPlayer(int index) {
     	return this.players.get(index);
     }
+    
+    
     public static void main(String[] args) {
 		Board b = new Board(3);
 		b.start();

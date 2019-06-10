@@ -35,7 +35,7 @@ public class Card
     /**
      * Display the card.
      * If back is false, the front of the card is display.
-     * If back is true, the back of the card is display with the information.
+     * If back is true, the back of the card is display with the information(s).
      *
      * @param back draw back or not
      */
@@ -59,30 +59,41 @@ public class Card
     	
     }
     
-    /*
-     * Return the color of the card
+    /**
+     * @return the color of the card
      */
     public String getColor() {
     	return color;
     }
     
-    /*
-     * Return the number of the card
+    /**
+     * @return the number of the card
      */
     public int getNumber() {
     	return number;
     }
-    
+    /**
+     * Set the color of the card as revealed
+     * @param colorRevealed true if the color has to be revealed, false otherwise
+     * @return the card in its new state.
+     */
     public Card setColorRevealed(boolean colorRevealed) {
     	this.colorRevealed = colorRevealed;
     	return this;
     }
-    
+    /**
+     * Set the number of the card as revealed
+     * @param colorRevealed true if the number has to be revealed, false otherwise
+     * @return the card in its new state.
+     */
     public Card setNumberRevealed(boolean numberRevealed) {
     	this.numberRevealed = numberRevealed;
     	return this;
     }
-    
+    /**
+     * @returns a stringified version of a card
+     */
+    @Override
     public String toString() {
     	return "| " + this.number + " " + this.color.charAt(0) + " |-";
     }

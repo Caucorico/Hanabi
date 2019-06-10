@@ -73,6 +73,10 @@ public class Deck
     	System.out.println(s);
     }
     
+    /**
+     * Get the list of colors existing in the deck
+     * @return An array list of strings representing colors
+     */
     public ArrayList<String> getColors() {
     	ArrayList<String> colors = new ArrayList<>();
     	for ( int i = 0 ; i < this.cards.size() ; ++i ) {
@@ -83,6 +87,10 @@ public class Deck
     	return colors;
     }
     
+    /**
+     * Get the cards's numbers (in [1, 5])
+     * @return An array list of integers
+     */
     public ArrayList<Integer> getNumbers() {
     	ArrayList<Integer> numbers = new ArrayList<>();
     	for ( int i = 0 ; i < this.cards.size() ; ++i ) {
@@ -92,7 +100,12 @@ public class Deck
     	}
     	return numbers;
     }
-
+    /**
+     * Changes the visibility of the cards color in the deck.
+     * It happens when a player give an information to another player.
+     * When displayed, cards color will be revealed.
+     * @param color The color to reveal in the deck
+     */
     public void updateVisibility(String color) {
     	for ( Card c : this.cards ) {
     		if ( c.getColor().equals(color)) {
@@ -100,7 +113,12 @@ public class Deck
     		}
     	}
     }
-    
+    /**
+     * Changes the visibility of the cards number in the deck.
+     * It happens when a player give an information to another player.
+     * When displayed, cards number will be revealed.
+     * @param number The number to reveal in the deck
+     */
     public void updateVisibility(int number) {
     	for ( Card c : this.cards ) {
     		if ( c.getNumber() == number ) {
@@ -109,12 +127,15 @@ public class Deck
     	}
     }
     /**
-     * Return the number of cards in the deck
+     * @return the number of cards in the deck
      */
     public int getDeckSize() {
     	return this.cards.size();
     }
-    
+    /**
+     * Checks if a deck is empty
+     * @return true if the deck is empty, false otherwise
+     */
     public boolean isEmpty() {
     	return this.cards.size() == 0;
     }
