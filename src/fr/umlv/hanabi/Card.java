@@ -83,7 +83,7 @@ public class Card
     }
     /**
      * Set the number of the card as revealed
-     * @param colorRevealed true if the number has to be revealed, false otherwise
+     * @param numberRevealed true if the number has to be revealed, false otherwise
      * @return the card in its new state.
      */
     public Card setNumberRevealed(boolean numberRevealed) {

@@ -96,7 +96,7 @@ public class Board
     private void createDeck()
     {
         String[] colors = { "red", "blue", "yellow", "green", "white" };
-        this.mainDeck = new Deck("mainDeck");
+        this.mainDeck = new Deck();
 
         for (String color : colors )
         {
@@ -119,11 +119,11 @@ public class Board
     private void initFireworks()
     {
     	this.fireworks = new HashMap<>(5);
-    	this.fireworks.put("red", new Deck("fireworks"));
-    	this.fireworks.put("blue", new Deck("fireworks"));
-    	this.fireworks.put("yellow", new Deck("fireworks"));
-    	this.fireworks.put("green", new Deck("fireworks"));
-    	this.fireworks.put("white", new Deck("fireworks"));
+    	this.fireworks.put("red", new Deck());
+    	this.fireworks.put("blue", new Deck());
+    	this.fireworks.put("yellow", new Deck());
+    	this.fireworks.put("green", new Deck());
+    	this.fireworks.put("white", new Deck());
     }
 
 
@@ -158,7 +158,7 @@ public class Board
         this.shuffleDeck();
         this.initDistribute();
         this.initFireworks();
-        this.discard = new Deck("discard");
+        this.discard = new Deck();
     }
 
     /**
@@ -274,17 +274,6 @@ public class Board
     public boolean isMainDeckEmpty() {
     	return mainDeck.isEmpty();
     }
-
-    /**
-     * Give an information to another player
-     * @param action color or number
-     * @param possibility which cards
-     * @return return false if the action is not allowed
-     */
-    public boolean giveInfo( int action, int possibility )
-    {
-        return true;
-    }
     
     /**
      * Displays a visualization of the board in its current state
@@ -349,13 +338,4 @@ public class Board
     public Player getPlayer(int index) {
     	return this.players.get(index);
     }
-    
-    
-    public static void main(String[] args) {
-		Board b = new Board(3);
-		b.start();
-		b.loop();
-		System.out.println("End of game");
-		b.end();
-	}
 }

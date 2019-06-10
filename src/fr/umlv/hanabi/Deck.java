@@ -18,16 +18,10 @@ public class Deck
      
     private String type;*/
 
-    public Deck(String type)
+    public Deck()
     {
         /*this.type = type;*/
         this.cards = new ArrayList<>();
-    }
-
-    public Deck(String type, ArrayList<Card> cards)
-    {
-        this(type);
-        this.cards = cards;
     }
 
     /**

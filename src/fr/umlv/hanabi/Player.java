@@ -37,7 +37,7 @@ public class Player
         this.number = number;
         this.board = board;
         this.numberOfCards = nbCards;
-        this.hand = new Deck("hand");
+        this.hand = new Deck();
     }
 
     /**
@@ -186,7 +186,7 @@ public class Player
 
     /**
      * Put a card in the player's hand
-     * @param the card to add
+     * @param card the card to add
      */
     public  void giveCard(Card card)
     {
