@@ -13,11 +13,14 @@ public class Deck
      */
     private ArrayList<Card> cards;
 
-    /**
+    /*
      * The type of the deck (hand, mainDeck ,discard ,etc).
-     
+
     private String type;*/
 
+    /**
+     * Deck constructor.
+     */
     public Deck()
     {
         /*this.type = type;*/
@@ -25,7 +28,7 @@ public class Deck
     }
 
     /**
-     * Shuffle the deck
+     * Shuffle the deck.
      */
     public void shuffle()
     {
@@ -68,8 +71,8 @@ public class Deck
     }
     
     /**
-     * Get the list of colors existing in the deck
-     * @return An array list of strings representing colors
+     * Get the list of colors existing in the deck.
+     * @return An array list of strings representing colors.
      */
     public ArrayList<String> getColors() {
     	ArrayList<String> colors = new ArrayList<>();
@@ -82,8 +85,8 @@ public class Deck
     }
     
     /**
-     * Get the cards's numbers (in [1, 5])
-     * @return An array list of integers
+     * Get the cards's numbers (in [1, 5]).
+     * @return An array list of integers.
      */
     public ArrayList<Integer> getNumbers() {
     	ArrayList<Integer> numbers = new ArrayList<>();
@@ -98,7 +101,7 @@ public class Deck
      * Changes the visibility of the cards color in the deck.
      * It happens when a player give an information to another player.
      * When displayed, cards color will be revealed.
-     * @param color The color to reveal in the deck
+     * @param color The color to reveal in the deck.
      */
     public void updateVisibility(String color) {
     	for ( Card c : this.cards ) {
@@ -111,7 +114,7 @@ public class Deck
      * Changes the visibility of the cards number in the deck.
      * It happens when a player give an information to another player.
      * When displayed, cards number will be revealed.
-     * @param number The number to reveal in the deck
+     * @param number The number to reveal in the deck.
      */
     public void updateVisibility(int number) {
     	for ( Card c : this.cards ) {
@@ -121,14 +124,16 @@ public class Deck
     	}
     }
     /**
-     * @return the number of cards in the deck
+     * Return the number of cards in the Deck.
+     *
+     * @return the number of cards in the deck.
      */
     public int getDeckSize() {
     	return this.cards.size();
     }
     /**
-     * Checks if a deck is empty
-     * @return true if the deck is empty, false otherwise
+     * Checks if a deck is empty.
+     * @return true if the deck is empty, false otherwise.
      */
     public boolean isEmpty() {
     	return this.cards.size() == 0;

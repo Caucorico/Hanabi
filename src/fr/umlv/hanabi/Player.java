@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Player
 {
     /**
-     * The player number
+     * The player number.
      */
     private int number;
 
@@ -20,18 +20,22 @@ public class Player
     private Board board;
 
     /**
-     * The player's hand
+     * The player's hand.
      */
     private Deck hand;
 
     /**
-     * The hand max cards number
+     * The hand max cards number.
      */
     private int numberOfCards;
 
-    /**
-     * Player object constructor.
-     */
+	/**
+	 * Player object constructor.
+	 *
+	 * @param number the player number.
+	 * @param nbCards the number of cards int he hand of the player.
+	 * @param board the board of the current game.
+	 */
     public Player(int number, int nbCards, Board board)
     {
         this.number = number;
@@ -113,16 +117,16 @@ public class Player
     }
     
     /**
-	 * Get the hand deck of the player
-     * @return the hand deck of the player
+	 * Get the hand deck of the player.
+     * @return the hand deck of the player.
      */
     public Deck getHand() {
     	return this.hand;
     }
     
     /**
-     * Display the player's hand deck
-     * @param self false if it is the player's, true otherwise
+     * Display the player's hand deck.
+     * @param self false if it is the player's, true otherwise.
      */
     public void showHand(boolean self)  {
     	this.hand.display(self);
@@ -130,8 +134,8 @@ public class Player
     
     /**
      * Scan choices of a player when giving an information.
-     * @param type 1 if the information is about a color, 2 if it's about a number
-     * @param player Id number of the player receiving the information
+     * @param type 1 if the information is about a color, 2 if it's about a number.
+     * @param player Id number of the player receiving the information.
      */
     private void scanInfo(int type, int player) {
     	int size, choice = 0;
@@ -185,8 +189,8 @@ public class Player
     }
 
     /**
-     * Put a card in the player's hand
-     * @param card the card to add
+     * Put a card in the player's hand.
+     * @param card the card to add.
      */
     public  void giveCard(Card card)
     {
@@ -194,7 +198,9 @@ public class Player
     }
     
     /**
-     * @return maximum number of cards in the player's hand
+	 * Get the number of cards in the player's hand.
+	 *
+     * @return maximum number of cards in the player's hand.
      */
     public int getNumberOfCards()
     {

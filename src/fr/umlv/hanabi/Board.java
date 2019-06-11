@@ -45,8 +45,8 @@ public class Board
      */
     private Deck mainDeck;
 
-    /*
-     * HashMap of Decks representing fireworks by color
+    /**
+     * HashMap of Decks representing fireworks by color.
      */
     private Map<String, Deck> fireworks;
 
@@ -56,7 +56,7 @@ public class Board
     private Deck discard;
 
     /**
-     * The lasts players who can play
+     * The lasts players who can play.
      */
     private int lastTurn;
 
@@ -91,7 +91,7 @@ public class Board
     }
 
     /**
-     * Create the main deck
+     * Create the main deck.
      */
     private void createDeck()
     {
@@ -204,7 +204,7 @@ public class Board
 
     /**
      * Checks if each firework has been completed.
-     * @return true if every firework has been completed, false otherwise
+     * @return true if every firework has been completed, false otherwise.
      */
     private boolean checkFireworks() {
     	for ( Map.Entry<String, Deck> entry : fireworks.entrySet() ) {
@@ -256,30 +256,31 @@ public class Board
 
     /**
      * Put a card on the board discard.
-     * @param card The card to discard
+     * @param card The card to discard.
      */
     public void discardCard( Card card )
     {
     	this.discard.addCard(card);
     }
 
-    /*
-     * Draw a card from the main deck
+    /**
+     * Draw a card from the main deck.
+     * @return the top card of the mainDeck.
      */
     public Card drawCard() {
     	return this.mainDeck.getCard(0);
     }
     
     /**
-     * Check if the main deck is empty
-     * @return true if the deck is empty, false otherwise
+     * Check if the main deck is empty.
+     * @return true if the deck is empty, false otherwise.
      */
     public boolean isMainDeckEmpty() {
     	return mainDeck.isEmpty();
     }
     
     /**
-     * Displays a visualization of the board in its current state
+     * Displays a visualization of the board in its current state.
      */
     public void display() {
     	System.out.println("-------------------------Board-------------------------");
@@ -309,14 +310,16 @@ public class Board
 		System.out.println("--------------------------------------------------------");
     }
     /**
-     * @return the number of player in the board
+     * Get the number of players in the game.
+     * @return the number of player in the board.
      */
     public int getNbPlayers() {
     	return this.players.size();
     }
+
     /**
-     * When a player takes a blue token from the board
-     * @return false is there is no more blue tocken, true otherwise
+     * When a player takes a blue token from the board.
+     * @return false is there is no more blue tocken, true otherwise.
      */
     public boolean takeBlueToken() {
     	if ( blueTokenPlayed < blueTokenMax ) {
@@ -326,7 +329,7 @@ public class Board
     	return false;
     }
     /**
-     * When a player give a blue tocken to the board
+     * When a player give a blue tocken to the board.
      */
     public void addBlueToken() {
     	if ( blueTokenPlayed > 0 ) {
@@ -334,9 +337,9 @@ public class Board
     	}
     }
     /**
-     * Get the player at the index given the array of players
-     * @param index index of the player
-     * @return the player found at the index
+     * Get the player at the index given the array of players.
+     * @param index index of the player.
+     * @return the player found at the index.
      */
     public Player getPlayer(int index) {
     	return this.players.get(index);

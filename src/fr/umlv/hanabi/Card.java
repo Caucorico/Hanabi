@@ -25,6 +25,12 @@ public class Card
      */
     private boolean numberRevealed;
 
+    /**
+     * Card constructor.
+     *
+     * @param color the color of the card.
+     * @param number the number of the card.
+     */
     public Card(String color, int number)
     {
         this.color = color;
@@ -37,7 +43,7 @@ public class Card
      * If back is false, the front of the card is display.
      * If back is true, the back of the card is display with the information(s).
      *
-     * @param back draw back or not
+     * @param back draw back or not.
      */
     public String display(boolean back)
     {
@@ -60,21 +66,25 @@ public class Card
     }
     
     /**
-     * @return the color of the card
+     * Get the color of the card.
+     *
+     * @return the color of the card.
      */
     public String getColor() {
     	return color;
     }
     
     /**
-     * @return the number of the card
+     * Get the number of the card.
+     *
+     * @return the number of the card.
      */
     public int getNumber() {
     	return number;
     }
     /**
-     * Set the color of the card as revealed
-     * @param colorRevealed true if the color has to be revealed, false otherwise
+     * Set the color of the card as revealed.
+     * @param colorRevealed true if the color has to be revealed, false otherwise.
      * @return the card in its new state.
      */
     public Card setColorRevealed(boolean colorRevealed) {
@@ -82,8 +92,8 @@ public class Card
     	return this;
     }
     /**
-     * Set the number of the card as revealed
-     * @param numberRevealed true if the number has to be revealed, false otherwise
+     * Set the number of the card as revealed.
+     * @param numberRevealed true if the number has to be revealed, false otherwise.
      * @return the card in its new state.
      */
     public Card setNumberRevealed(boolean numberRevealed) {
@@ -91,7 +101,9 @@ public class Card
     	return this;
     }
     /**
-     * @returns a stringified version of a card
+     * Return a stringify version of the card.
+     *
+     * @return a stringified version of a card.
      */
     @Override
     public String toString() {
