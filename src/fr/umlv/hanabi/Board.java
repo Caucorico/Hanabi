@@ -100,9 +100,9 @@ public class Board
 
         for (String color : colors )
         {
-        	this.mainDeck.addCard(new Card(color, 1));
-        	this.mainDeck.addCard(new Card(color, 1));
-        	this.mainDeck.addCard(new Card(color, 1));
+            this.mainDeck.addCard(new Card(color, 1));
+            this.mainDeck.addCard(new Card(color, 1));
+            this.mainDeck.addCard(new Card(color, 1));
             this.mainDeck.addCard(new Card(color, 2));
             this.mainDeck.addCard(new Card(color, 2));
             this.mainDeck.addCard(new Card(color, 3));
@@ -168,7 +168,10 @@ public class Board
     {
     	int nbPlayers = this.players.size();
     	while ( ! checkVictory() ) {
+    		//clear console
     	    for(int i = 0 ; i < 5000 ; i++ ) System.out.println();
+    	    //System.out.println("\033\143"); // clear a linux console
+    	    
     		System.out.println("Player " + (turn + 1) + " it's your turn ! Press enter to play");
     		new Scanner(System.in).nextLine();
     		this.display();
